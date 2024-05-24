@@ -8,13 +8,13 @@ import (
 	"github.com/labstack/echo"
 )
 
-func GetAllOrg(c echo.Context)error{
-	db:=database.Db
+func GetAllOrg(c echo.Context) error {
+	db := database.Db
 	var org []database.Organizer
-	result:=db.Find(&org)
-	if result.Error!=nil{
+	result := db.Find(&org)
+	if result.Error != nil {
 		log.Println(result.Error)
-		return c.JSON(http.StatusInternalServerError,"error while finding")
+		return c.JSON(http.StatusInternalServerError, "error while finding")
 	}
-	return c.JSON(http.StatusFound,org)
+	return c.JSON(http.StatusFound, org)
 }

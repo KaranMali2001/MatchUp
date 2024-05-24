@@ -7,9 +7,9 @@ import (
 )
 
 func Organizer_Route(e *echo.Echo) {
-	e.GET("/org",organizer.GetAllOrg)
+	e.GET("/org", organizer.GetAllOrg)
 	e.GET("/organizer/:username", organizer.GetOrganizerInfo)
-	e.POST("/organizer", organizer.NewOrganizer,middleware.Validator)
+	e.POST("/organizer", organizer.NewOrganizer, middleware.Validator)
 	e.PUT("/organizer/:username", organizer.UpdateOrganizer)
 	e.DELETE("/organizer/:username", organizer.DeleteOranizer)
 }

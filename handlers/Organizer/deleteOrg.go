@@ -7,20 +7,21 @@ import (
 	database "github.com/KaranMali2001/MatchUp/Database"
 	"github.com/labstack/echo"
 )
-//soft delete entry still exist in db
+
+// soft delete entry still exist in db
 func DeleteOranizer(c echo.Context) error {
-	db:=database.Db
+	db := database.Db
 	var organizer database.Organizer
-	username:= c.Param("username")
-	result:= db.Where("username = ?",username).Delete(&organizer)
-	if result.Error!=nil{
+	username := c.Param("username")
+	result := db.Where("username = ?", username).Delete(&organizer)
+	if result.Error != nil {
 		log.Println(result.Error)
-		return c.JSON(http.StatusInternalServerError,"error while deleting")
+		return c.JSON(http.StatusInternalServerError, "error while deleting")
 	}
-	if result.RowsAffected>0 {
+	if result.RowsAffected > 0 {
 		return c.JSON(http.StatusOK, "org deleted sucessfully")
-		}else{
-			return c.JSON(http.StatusNotFound,"org does not exist")
-		}
-	
+	} else {
+		return c.JSON(http.StatusNotFound, "org does not exist")
+	}
+
 }

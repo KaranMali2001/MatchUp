@@ -9,19 +9,19 @@ import (
 )
 
 func CreatePlayer(c echo.Context) error {
-    db:= database.Db
-	player:= new(database.Player)
-	if err:=c.Bind(&player);err!=nil{
+	db := database.Db
+	player := new(database.Player)
+	if err := c.Bind(&player); err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusInternalServerError,"error while binding the body")
+		return c.JSON(http.StatusInternalServerError, "error while binding the body")
 	}
-	result:= db.Create(player)
-	if err:= result.Error;err!=nil{
+	result := db.Create(player)
+	if err := result.Error; err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusInternalServerError,"error while adding to db")
+		return c.JSON(http.StatusInternalServerError, "error while adding to db")
 	}
-	return c.JSON(http.StatusOK,map[string]interface{}{
-		"message":"player created sucessfullly",
-		"player":player,
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "player created sucessfullly",
+		"player":  player,
 	})
 }
