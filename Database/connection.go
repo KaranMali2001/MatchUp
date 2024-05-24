@@ -16,7 +16,7 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-
+    Db.AutoMigrate(&Player{},&Organizer{})
 	fmt.Println("database connected sucessfully")
 
 }
