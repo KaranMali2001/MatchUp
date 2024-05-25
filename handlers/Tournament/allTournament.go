@@ -2,10 +2,21 @@ package tournament
 
 import (
 	"net/http"
-
+"log"
+	database "github.com/KaranMali2001/MatchUp/Database"
 	"github.com/labstack/echo"
 )
 
 func AllTournament(c echo.Context) error {
-	return c.JSON(http.StatusOK, "returning all the tournaments")
+	db:=database.Db
+	var tournaments []database.Tournament
+	result:=db.Find(&tournaments)
+	if result.Error != nil {
+		log.Println(result.Error)
+		return c.JSON(http.StatusInternalServerError, "error while finding users")
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message":"returning all the tournaments",
+        "tournaments":tournaments,
+})
 }
