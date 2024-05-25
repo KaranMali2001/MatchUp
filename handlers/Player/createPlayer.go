@@ -11,10 +11,12 @@ import (
 func CreatePlayer(c echo.Context) error {
 	db := database.Db
 	player := new(database.Player)
+
 	if err := c.Bind(&player); err != nil {
 		log.Println(err)
 		return c.JSON(http.StatusInternalServerError, "error while binding the body")
 	}
+	player.Role = "player"
 	result := db.Create(player)
 	if err := result.Error; err != nil {
 		log.Println(err)

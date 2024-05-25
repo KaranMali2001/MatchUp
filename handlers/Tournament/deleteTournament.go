@@ -9,18 +9,18 @@ import (
 )
 
 func DeleteTournament(c echo.Context) error {
-	db:=database.Db
+	db := database.Db
 	var tournament database.Tournament
-	name:= c.Param("tournament_name")
-	result:= db.Where("tournament_name = ?",name).Delete(&tournament)
-	if result.Error!=nil{
+	name := c.Param("tournament_name")
+	result := db.Where("tournament_name = ?", name).Delete(&tournament)
+	if result.Error != nil {
 		log.Println(result.Error)
-		return c.JSON(http.StatusInternalServerError,"error while deleting")
+		return c.JSON(http.StatusInternalServerError, "error while deleting")
 	}
-	if result.RowsAffected>0{
-		return c.JSON(http.StatusOK,"deleted sucessfully")
-	}else{
-		return c.JSON(http.StatusNotFound,"tournament not found")
+	if result.RowsAffected > 0 {
+		return c.JSON(http.StatusOK, "deleted sucessfully")
+	} else {
+		return c.JSON(http.StatusNotFound, "tournament not found")
 	}
-	
+
 }

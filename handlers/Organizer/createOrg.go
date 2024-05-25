@@ -11,10 +11,12 @@ import (
 func NewOrganizer(c echo.Context) error {
 	organizer := new(database.Organizer)
 	db := database.Db
+
 	if err := c.Bind(&organizer); err != nil {
 		log.Println(err)
 		return c.JSON(http.StatusInternalServerError, "error while binding")
 	}
+	organizer.Role = "organizer"
 	result := db.Create(&organizer)
 	if result.Error != nil {
 		log.Println(result.Error)

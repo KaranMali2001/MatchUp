@@ -10,10 +10,10 @@ import (
 )
 
 func GetTournament(c echo.Context) error {
-	db:=database.Db
+	db := database.Db
 	var tournament database.Tournament
-	name:= c.Param("tournament_name")
-	err:= db.Model(&tournament).Where("tournament_name = ?",name).First(&tournament).Error
+	name := c.Param("tournament_name")
+	err := db.Model(&tournament).Where("tournament_name = ?", name).First(&tournament).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			log.Println(err)
@@ -21,5 +21,7 @@ func GetTournament(c echo.Context) error {
 		}
 		return c.JSON(http.StatusInternalServerError, "error while finding the data")
 	}
-	return c.JSON(http.StatusOK, "returning specific tournament")
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"tournament": tournament,
+	})
 }

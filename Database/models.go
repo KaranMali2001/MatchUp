@@ -22,7 +22,7 @@ type Organizer struct {
 }
 type Tournament struct {
 	gorm.Model
-	TournamentID string`json:"tournament_id" gorm:"type:uuid;default:gen_random_uuid();primaryKey"`
+	TournamentID string `json:"tournament_id" gorm:"type:uuid;default:gen_random_uuid();primaryKey"`
 
 	TournamentName string    `json:"tournament_name" gorm:"not null"`
 	StartDate      time.Time `json:"start_date" gorm:"not null"`
@@ -32,10 +32,10 @@ type Tournament struct {
 	Organizer      Organizer `gorm:"foreignKey:OrganizerName;references:Username;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
 	Live           bool      `json:"live" gorm:"default:false"`
 }
-type Registration struct{
+type Registration struct {
 	gorm.Model
-	PlayerUsername string `json:"player_username" gorm:"not null;index"`
-	Player Player  `gorm:"foreignKey:PlayerUsername;references:Username;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
-    TournamentID string `json:"tournament_id" gorm:"not null"`
+	PlayerUsername string     `json:"player_username" gorm:"not null;index"`
+	Player         Player     `gorm:"foreignKey:PlayerUsername;references:Username;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
+	TournamentID   string     `json:"tournament_id" gorm:"not null"`
 	Tournament     Tournament `gorm:"foreignKey:TournamentID;references:TournamentID;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
 }

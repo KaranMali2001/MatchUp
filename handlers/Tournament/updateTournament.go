@@ -9,17 +9,17 @@ import (
 )
 
 func UpdateTournament(c echo.Context) error {
-	db:=database.Db
+	db := database.Db
 	var tournament database.Tournament
-	name:=c.Param("tournament_name")
-	if err:=c.Bind(&tournament);err!=nil{
+	name := c.Param("tournament_name")
+	if err := c.Bind(&tournament); err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusInternalServerError,"error while binding")
+		return c.JSON(http.StatusInternalServerError, "error while binding")
 	}
-	updateTournament:=tournament
-	if err:=db.Model(&updateTournament).Where("tournament_name = ?",name).Updates(&tournament).Error;err!=nil{
+	updateTournament := tournament
+	if err := db.Model(&updateTournament).Where("tournament_name = ?", name).Updates(&tournament).Error; err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusInternalServerError,"error while updating")
+		return c.JSON(http.StatusInternalServerError, "error while updating")
 	}
 	return c.JSON(http.StatusOK, "updated tournament sucessfully")
 }
