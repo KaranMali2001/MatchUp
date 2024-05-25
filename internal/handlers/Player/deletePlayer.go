@@ -4,13 +4,14 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
+	database "github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/labstack/echo"
 )
 
 // soft delete entry still exist in db
 func DeletePlayer(c echo.Context) error {
-	var player database.Player
+	var player models.Player
 	db := database.Db
 	username := c.Param("username")
 	result := db.Where("username = ?", username).Delete(&player)

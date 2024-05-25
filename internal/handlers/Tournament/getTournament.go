@@ -4,14 +4,15 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
+	database "github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/labstack/echo"
 	"gorm.io/gorm"
 )
 
 func GetTournament(c echo.Context) error {
 	db := database.Db
-	var tournament database.Tournament
+	var tournament models.Tournament
 	name := c.Param("tournament_name")
 	err := db.Model(&tournament).Where("tournament_name = ?", name).First(&tournament).Error
 	if err != nil {

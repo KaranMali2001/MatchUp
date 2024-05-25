@@ -3,7 +3,7 @@ package route
 import (
 	middleware "github.com/KaranMali2001/MatchUp/Middleware"
 
-	player "github.com/KaranMali2001/MatchUp/handlers/Player"
+	player "github.com/KaranMali2001/MatchUp/internal/handlers/Player"
 	"github.com/labstack/echo"
 )
 

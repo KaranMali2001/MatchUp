@@ -4,14 +4,15 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
+	database "github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 	//"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo"
 )
 
 func UpdatePlayer(c echo.Context) error {
 	db := database.Db
-	var player database.Player
+	var player models.Player
 	username := c.Param("username")
 
 	if err := c.Bind(&player); err != nil {

@@ -5,13 +5,14 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
+	database "github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/labstack/echo"
 )
 
 func GetAllPlayer(c echo.Context) error {
 	db := database.Db
-	var player []database.Player
+	var player []models.Player
 	result := db.Find(&player)
 	if result.Error != nil {
 		log.Println(result.Error)

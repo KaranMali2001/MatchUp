@@ -1,7 +1,7 @@
 package route
 
 import (
-	tournament "github.com/KaranMali2001/MatchUp/handlers/Tournament"
+	tournament "github.com/KaranMali2001/MatchUp/internal/handlers/Tournament"
 	"github.com/labstack/echo"
 )
 

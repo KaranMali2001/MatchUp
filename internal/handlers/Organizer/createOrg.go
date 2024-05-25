@@ -4,12 +4,13 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
+	"github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/labstack/echo"
 )
 
 func NewOrganizer(c echo.Context) error {
-	organizer := new(database.Organizer)
+	organizer := new(models.Organizer)
 	db := database.Db
 
 	if err := c.Bind(&organizer); err != nil {

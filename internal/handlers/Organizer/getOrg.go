@@ -4,13 +4,14 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
+	database "github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/labstack/echo"
 	"gorm.io/gorm"
 )
 
 func GetOrganizerInfo(c echo.Context) error {
-	var organizer database.Organizer
+	var organizer models.Organizer
 	db := database.Db
 	username := c.Param("username")
 	err := db.Model(&organizer).Where("username = ?", username).First(&organizer).Error

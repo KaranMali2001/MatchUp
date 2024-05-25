@@ -4,13 +4,14 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
+	database "github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/labstack/echo"
 )
 
 func CreatePlayer(c echo.Context) error {
 	db := database.Db
-	player := new(database.Player)
+	player := new(models.Player)
 
 	if err := c.Bind(&player); err != nil {
 		log.Println(err)

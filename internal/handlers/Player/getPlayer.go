@@ -4,13 +4,14 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
+	database "github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/labstack/echo"
 	"gorm.io/gorm"
 )
 
 func GetPlayerInfo(c echo.Context) error {
-	var player database.Player
+	var player models.Player
 	db := database.Db
 	username := c.Param("username")
 	err := db.Model(&player).Where("username = ?", username).First(&player).Error

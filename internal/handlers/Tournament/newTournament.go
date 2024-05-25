@@ -4,26 +4,20 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
-	"gorm.io/gorm"
+	database "github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 
 	"github.com/labstack/echo"
 )
 
 func NewTournament(c echo.Context) error {
 	db := database.Db
-	tournament := new(database.Tournament)
+	tournament := new(models.Tournament)
 	if err := c.Bind(&tournament); err != nil {
 		log.Println(err)
 		return c.JSON(http.StatusInternalServerError, "binding failed")
 	}
-	var org database.Organizer
 
-	err := db.Where("organizer_name = ? ", tournament.OrganizerName).First(&org).Error
-	if err != nil && err == gorm.ErrRecordNotFound {
-		log.Println(err)
-		return c.JSON(http.StatusInternalServerError, "org does not exist")
-	}
 	result := db.Create(tournament)
 	if result.Error != nil {
 		log.Println(result.Error)

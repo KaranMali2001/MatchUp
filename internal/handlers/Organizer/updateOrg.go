@@ -4,12 +4,13 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
+	database "github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/labstack/echo"
 )
 
 func UpdateOrganizer(c echo.Context) error {
-	var organizer database.Organizer
+	var organizer models.Organizer
 	db := database.Db
 	username := c.Param("username")
 	if err := c.Bind(&organizer); err != nil {

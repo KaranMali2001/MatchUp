@@ -2,7 +2,7 @@ package route
 
 import (
 	middleware "github.com/KaranMali2001/MatchUp/Middleware"
-	organizer "github.com/KaranMali2001/MatchUp/handlers/Organizer"
+	organizer "github.com/KaranMali2001/MatchUp/internal/handlers/Organizer"
 	"github.com/labstack/echo"
 )
 

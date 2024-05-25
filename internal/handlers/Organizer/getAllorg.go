@@ -4,13 +4,14 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
+	database "github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/labstack/echo"
 )
 
 func GetAllOrg(c echo.Context) error {
 	db := database.Db
-	var org []database.Organizer
+	var org []models.Organizer
 	result := db.Find(&org)
 	if result.Error != nil {
 		log.Println(result.Error)

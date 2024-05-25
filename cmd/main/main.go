@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
-	route "github.com/KaranMali2001/MatchUp/Route"
+	database "github.com/KaranMali2001/MatchUp/database"
+	route "github.com/KaranMali2001/MatchUp/internal/routes"
 	"github.com/labstack/echo"
 )
 

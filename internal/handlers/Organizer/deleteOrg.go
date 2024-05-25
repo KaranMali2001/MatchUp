@@ -4,14 +4,15 @@ import (
 	"log"
 	"net/http"
 
-	database "github.com/KaranMali2001/MatchUp/Database"
+	database "github.com/KaranMali2001/MatchUp/database"
+	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/labstack/echo"
 )
 
 // soft delete entry still exist in db
 func DeleteOranizer(c echo.Context) error {
 	db := database.Db
-	var organizer database.Organizer
+	var organizer models.Organizer
 	username := c.Param("username")
 	result := db.Where("username = ?", username).Delete(&organizer)
 	if result.Error != nil {
