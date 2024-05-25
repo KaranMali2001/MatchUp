@@ -6,6 +6,7 @@ import (
 
 	"github.com/KaranMali2001/MatchUp/database"
 	"github.com/KaranMali2001/MatchUp/database/models"
+	"github.com/KaranMali2001/MatchUp/middleware"
 	"github.com/labstack/echo"
 )
 
@@ -23,8 +24,14 @@ func NewOrganizer(c echo.Context) error {
 		log.Println(result.Error)
 		return c.JSON(http.StatusInternalServerError, "error wihle createing new org")
 	}
+	token, err := middleware.CreateToken("organizer", organizer.Username)
+	if err != nil {
+		log.Println(err)
+		return c.JSON(http.StatusBadRequest, "entry created but error while creating jwt token")
+	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"message":   "new org created sucessfully",
 		"organizer": organizer,
+		"token":     token,
 	})
 }

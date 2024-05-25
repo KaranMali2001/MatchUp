@@ -1,8 +1,10 @@
 package models
+
 import (
 	"gorm.io/gorm"
 	"time"
 )
+
 type Tournament struct {
 	gorm.Model
 	TournamentID string `json:"tournament_id" gorm:"type:uuid;default:gen_random_uuid();primaryKey"`

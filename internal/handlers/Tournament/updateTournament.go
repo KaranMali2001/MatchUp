@@ -12,6 +12,10 @@ import (
 func UpdateTournament(c echo.Context) error {
 	db := database.Db
 	var tournament models.Tournament
+	claims := c.Get("claims").(*models.JWTClaims)
+	if claims.Role != "organizer" {
+		return c.JSON(http.StatusUnauthorized, "only org can create tournament")
+	}
 	name := c.Param("tournament_name")
 	if err := c.Bind(&tournament); err != nil {
 		log.Println(err)
