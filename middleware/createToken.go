@@ -7,7 +7,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
-var jwtKey = []byte("my_secrate_key")
+var JWTKey = []byte("my_secrate_key")
 
 func CreateToken(role string, username string) (string, error) {
 	claims := models.JWTClaims{
@@ -16,7 +16,7 @@ func CreateToken(role string, username string) (string, error) {
 		RegisteredClaims: jwt.RegisteredClaims{},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(jwtKey)
+	tokenString, err := token.SignedString(JWTKey)
 	if err != nil {
 		log.Println(err)
 		return "", err

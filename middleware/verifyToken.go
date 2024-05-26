@@ -23,7 +23,7 @@ func VerifyJWT(next echo.HandlerFunc) echo.HandlerFunc {
 			return c.JSON(http.StatusUnauthorized, "does not contain bearer")
 		}
 		token, err := jwt.ParseWithClaims(authHeader, &models.JWTClaims{}, func(t *jwt.Token) (interface{}, error) {
-			return []byte(jwtKey), nil
+			return []byte(JWTKey), nil
 
 		})
 		if err != nil {

@@ -18,6 +18,7 @@ func NewTournament(c echo.Context) error {
 		log.Println(err)
 		return c.JSON(http.StatusInternalServerError, "binding failed")
 	}
+	tournament.OrganizerName=claims.Username
 	if claims.Role != "organizer" {
 		return c.JSON(http.StatusUnauthorized, "only org can create tournament")
 	}
