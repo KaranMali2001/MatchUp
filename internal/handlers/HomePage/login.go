@@ -10,7 +10,7 @@ import (
 
 	"github.com/labstack/echo"
 )
-//for signup 
+ 
 //use react and give option as to sign up as player or org and then redirect the root
 func Login(c echo.Context)error{
     db:=database.Db 
@@ -28,6 +28,7 @@ func Login(c echo.Context)error{
 		}
 	}
 	claims:=jwt.MapClaims{
+		"username":user.Username,
 		"role":user.Role,
 	}
 	token:=jwt.NewWithClaims(jwt.SigningMethodHS256,claims)

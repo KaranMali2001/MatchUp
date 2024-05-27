@@ -14,6 +14,7 @@ func NewTournament(c echo.Context) error {
 	db := database.Db
 	tournament := new(models.Tournament)
 	claims := c.Get("claims").(*models.JWTClaims)
+	//validate
 	if err := c.Bind(&tournament); err != nil {
 		log.Println(err)
 		return c.JSON(http.StatusInternalServerError, "binding failed")
@@ -29,7 +30,7 @@ func NewTournament(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message":    "new tournament created sucessfully",
+		"message":    "new tournament created successfully",
 		"tournament": tournament,
 	})
 }

@@ -2,7 +2,10 @@ package database
 
 import (
 	"fmt"
-	models "github.com/KaranMali2001/MatchUp/database/models"
+
+	
+	"github.com/KaranMali2001/MatchUp/database/models"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -16,7 +19,8 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	Db.AutoMigrate(&models.Player{}, &models.Organizer{}, &models.Tournament{}, &models.Tournament{})
-	fmt.Println("database connected sucessfully")
-
+	Db.AutoMigrate(&models.Registration{})
+	Db.AutoMigrate(&models.Player{}, &models.Organizer{}, &models.Tournament{})
+	fmt.Println("database connected successfully")
+    UpdateStatus()
 }
