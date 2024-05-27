@@ -20,7 +20,7 @@ func DeletePlayer(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "error while deleting player")
 	}
 	if result.RowsAffected > 0 {
-		return c.JSON(http.StatusOK, "player deleted sucessfullly")
+		return c.JSON(http.StatusOK, "player deleted successfully")
 	} else {
 		return c.JSON(http.StatusNotFound, "player does not exist")
 	}

@@ -23,7 +23,7 @@ func UpdateOrganizer(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "error while updating")
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message":   "org info updated sucessfully",
+		"message":   "org info updated successfully",
 		"organizer": organizer,
 	})
 }

@@ -1,4 +1,3 @@
-// route should be procted for admin only
 package player
 
 import (

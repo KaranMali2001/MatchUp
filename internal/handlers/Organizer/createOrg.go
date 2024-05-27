@@ -22,7 +22,7 @@ func NewOrganizer(c echo.Context) error {
 	result := db.Create(&organizer)
 	if result.Error != nil {
 		log.Println(result.Error)
-		return c.JSON(http.StatusInternalServerError, "error wihle createing new org")
+		return c.JSON(http.StatusInternalServerError, "error while creating new org")
 	}
 	token, err := middleware.CreateToken("organizer", organizer.Username)
 	if err != nil {
@@ -30,7 +30,7 @@ func NewOrganizer(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, "entry created but error while creating jwt token")
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message":   "new org created sucessfully",
+		"message":   "new org created successfully",
 		"organizer": organizer,
 		"token":     token,
 	})

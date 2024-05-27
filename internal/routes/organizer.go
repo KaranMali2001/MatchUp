@@ -11,5 +11,5 @@ func Organizer_Route(e *echo.Echo) {
 	e.GET("/organizer/:username", organizer.GetOrganizerInfo)
 	e.POST("/organizer", organizer.NewOrganizer, middleware.Validator)
 	e.PUT("/organizer/:username", organizer.UpdateOrganizer, middleware.VerifyJWT)
-	e.DELETE("/organizer/:username", organizer.DeleteOranizer, middleware.VerifyJWT)
+	e.DELETE("/organizer/:username", organizer.DeleteOrganizer, middleware.VerifyJWT)
 }

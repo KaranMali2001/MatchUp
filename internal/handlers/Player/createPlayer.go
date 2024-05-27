@@ -31,7 +31,7 @@ func CreatePlayer(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message": "player created sucessfullly",
+		"message": "player created successfully",
 		"player":  player,
 		"token":   token,
 	})

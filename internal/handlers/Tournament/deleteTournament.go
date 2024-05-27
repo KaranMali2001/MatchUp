@@ -19,7 +19,7 @@ func DeleteTournament(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "error while deleting")
 	}
 	if result.RowsAffected > 0 {
-		return c.JSON(http.StatusOK, "deleted sucessfully")
+		return c.JSON(http.StatusOK, "deleted successfully")
 	} else {
 		return c.JSON(http.StatusNotFound, "tournament not found")
 	}

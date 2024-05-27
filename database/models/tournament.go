@@ -7,7 +7,6 @@ import (
 
 type Tournament struct {
 	gorm.Model
-	TournamentID string `json:"tournament_id" gorm:"type:uuid;default:gen_random_uuid();primaryKey"`
 
 	TournamentName string    `json:"tournament_name" gorm:"not null"`
 	StartDate      time.Time `json:"start_date" gorm:"not null"`

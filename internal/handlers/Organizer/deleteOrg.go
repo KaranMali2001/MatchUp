@@ -10,7 +10,7 @@ import (
 )
 
 // soft delete entry still exist in db
-func DeleteOranizer(c echo.Context) error {
+func DeleteOrganizer(c echo.Context) error {
 	db := database.Db
 	var organizer models.Organizer
 	username := c.Param("username")
@@ -20,7 +20,7 @@ func DeleteOranizer(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "error while deleting")
 	}
 	if result.RowsAffected > 0 {
-		return c.JSON(http.StatusOK, "org deleted sucessfully")
+		return c.JSON(http.StatusOK, "org deleted successfully")
 	} else {
 		return c.JSON(http.StatusNotFound, "org does not exist")
 	}
