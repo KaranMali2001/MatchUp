@@ -30,6 +30,6 @@ func Registration(c echo.Context) error {
 		log.Println(result.Error)
 		return c.JSON(http.StatusInternalServerError, "error while inserting in db")
 	}
-tournament.TotalPlayer+=1
+	tournament.TotalPlayer += 1
 	return c.JSON(http.StatusOK, "registration for tournament is successful")
 }
