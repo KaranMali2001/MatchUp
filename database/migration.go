@@ -12,3 +12,6 @@ func AutoMigrate() {
 	Db.AutoMigrate(&models.Match{})
 
 }
+func DropTable(){
+	Db.Migrator().DropTable(&models.Match{})
+}

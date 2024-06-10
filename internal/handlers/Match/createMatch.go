@@ -62,12 +62,17 @@ func shuffleMatches(playerName []string, tournamentName string) ([][]string, err
 		pair := []string{playerName[i], playerName[i+1]}
 		pairs = append(pairs, pair)
 	}
-	for _, match := range pairs {
+	fmt.Println("pairs",pairs)
+	for _, pair := range pairs {
 		newMatch := &models.Match{
 			
-			TournamentName:  tournamentName,
-			PlayerUsername1: match[0],
-			PlayerUsername2: match[1],
+			FirstPlayerUsername:  pair[0],
+    SecondPlayerUsername: pair[1],
+    TournamentName:       tournamentName,
+    SET1:                 models.Score{FirstPlayerScore: 0, SecondPlayerScore: 0},
+    SET2:                 models.Score{FirstPlayerScore: 0, SecondPlayerScore: 0},
+    SET3:                 models.Score{FirstPlayerScore: 0, SecondPlayerScore: 0},
+			
 		}
 		if err := db.Create(&newMatch).Error; err != nil {
 			log.Println(err)

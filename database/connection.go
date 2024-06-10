@@ -19,6 +19,7 @@ func init() {
 	}
 
 	AutoMigrate()
+	//DropTable()
 	fmt.Println("database connected successfully")
 	var wg sync.WaitGroup
 	wg.Add(1)
