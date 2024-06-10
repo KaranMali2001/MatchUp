@@ -1,4 +1,4 @@
-package organizer
+package player
 
 import (
 	"github.com/KaranMali2001/MatchUp/database"
@@ -7,11 +7,8 @@ import (
 	"github.com/labstack/echo"
 )
 
-// soft delete entry still exist in db
-func DeleteOrganizer(c echo.Context) error {
+func GetAllPlayer(c echo.Context) error {
 	db := database.Db
-	var organizer models.Organizer
-	id := c.Param("id")
-	return helper.DeleteInfo(c, db, &organizer, id)
-
+	var player []models.Player
+	return helper.GetAllInfo(c, db, &player)
 }

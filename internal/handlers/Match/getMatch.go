@@ -2,25 +2,21 @@ package match
 
 import (
 	"log"
-	"net/http"
+	"strconv"
 
 	"github.com/KaranMali2001/MatchUp/database"
 	"github.com/KaranMali2001/MatchUp/database/models"
+	"github.com/KaranMali2001/MatchUp/internal/helper"
 	"github.com/labstack/echo"
 )
 
 func GetMatch(c echo.Context) error {
-	id := c.Param("id")
-	db := database.Db
-	var match models.Match
-	err := db.Where("id = ?", id).First(&match).Error
+	idStr := c.Param("id")
+	id, err := strconv.ParseUint(idStr, 10, 64)
 	if err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusInternalServerError, "error while finding ")
 	}
-
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message": "match info",
-		"match":   match,
-	})
+	db := database.Db
+	var match models.Match
+	return helper.GetInfo(c, db, &match, id)
 }

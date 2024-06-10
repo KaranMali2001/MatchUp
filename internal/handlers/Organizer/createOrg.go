@@ -6,6 +6,7 @@ import (
 
 	"github.com/KaranMali2001/MatchUp/database"
 	"github.com/KaranMali2001/MatchUp/database/models"
+	"github.com/KaranMali2001/MatchUp/internal/helper"
 	"github.com/KaranMali2001/MatchUp/middleware"
 	"github.com/labstack/echo"
 )
@@ -19,10 +20,12 @@ func NewOrganizer(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "error while binding")
 	}
 	organizer.Role = "organizer"
-	result := db.Create(&organizer)
-	if result.Error != nil {
-		log.Println(result.Error)
-		return c.JSON(http.StatusInternalServerError, "error while creating new org")
+
+	errChannel := helper.Create(db, organizer)
+	// Wait for the result from the channel
+	if err := <-errChannel; err != nil {
+		log.Println(err)
+		return c.JSON(http.StatusInternalServerError, "Error while creating tournament")
 	}
 	token, err := middleware.CreateToken("organizer", organizer.Username)
 	if err != nil {

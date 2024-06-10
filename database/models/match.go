@@ -1,6 +1,8 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Score struct {
 	FirstPlayerScore  uint8 `json:"first_player_score"`
@@ -8,6 +10,7 @@ type Score struct {
 }
 type Match struct {
 	gorm.Model
+
 	PlayerUsername1 string       `json:"player_username" gorm:"not null"`
 	Player1         Registration `gorm:"foreignKey:PlayerUsername1;reference:PlayerUsername;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
 	PlayerUsername2 string       `json:"player_username2" gorm:"not null"`

@@ -17,7 +17,7 @@ func main() {
 	route.Player_Route(e)
 	route.Organizer_Route(e)
 	route.Tournament_route(e)
-
+	route.MatchRoute(e)
 	e.Start(":8080")
 
 	fmt.Println(database.Db)

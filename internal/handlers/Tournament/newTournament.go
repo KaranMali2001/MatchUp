@@ -6,6 +6,7 @@ import (
 
 	database "github.com/KaranMali2001/MatchUp/database"
 	"github.com/KaranMali2001/MatchUp/database/models"
+	"github.com/KaranMali2001/MatchUp/internal/helper"
 
 	"github.com/labstack/echo"
 )
@@ -23,14 +24,13 @@ func NewTournament(c echo.Context) error {
 	if claims.Role != "organizer" {
 		return c.JSON(http.StatusUnauthorized, "only org can create tournament")
 	}
-	result := db.Create(tournament)
-	if result.Error != nil {
-		log.Println(result.Error)
-		return c.JSON(http.StatusInternalServerError, "error while adding to db")
+	errChannel := helper.Create(db, tournament)
+	// Wait for the result from the channel
+	if err := <-errChannel; err != nil {
+		log.Println(err)
+		return c.JSON(http.StatusInternalServerError, "Error while creating tournament")
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message":    "new tournament created successfully",
-		"tournament": tournament,
-	})
+	return c.JSON(http.StatusOK, "Tournament created successfully")
+
 }
