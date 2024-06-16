@@ -5,11 +5,11 @@ import (
 )
 
 type Registration struct {
-    gorm.Model
+	gorm.Model
 
-    PlayerUsername string `json:"player_username" gorm:"type:varchar(100);unique;not null"`
-    Player         Player `gorm:"foreignKey:PlayerUsername;references:Username;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
+	PlayerUsername string `json:"player_username" gorm:"type:varchar(100);unique;not null"`
+	Player         Player `gorm:"foreignKey:PlayerUsername;references:Username;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
 
-    TournamentName string     `json:"tournament_name" gorm:"not null"`
-    Tournament     Tournament `gorm:"foreignKey:TournamentName;references:TournamentName;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
+	TournamentName string     `json:"tournament_name" gorm:"not null"`
+	Tournament     Tournament `gorm:"foreignKey:TournamentName;references:TournamentName;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
 }

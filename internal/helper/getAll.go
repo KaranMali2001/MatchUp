@@ -18,15 +18,20 @@ func GetAllInfo[T any](c echo.Context, db *gorm.DB, models *[]T) error {
 			return
 		}
 		if result.RowsAffected == 0 {
-			resultChan <- errors.New("record not found")
+			resultChan <- gorm.ErrRecordNotFound
 			return
 		}
 		resultChan <- nil
 	}()
+
 	err := <-resultChan
 	if err != nil {
-		log.Println(err)
-		return c.JSON(http.StatusInternalServerError, "error")
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.JSON(http.StatusNotFound, map[string]string{"error": "record not found"})
+		}
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+
 	}
-	return c.JSON(http.StatusOK, models)
+	return c.JSON(http.StatusOK,models)
 }
+

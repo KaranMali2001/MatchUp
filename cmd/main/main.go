@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
-	database "github.com/KaranMali2001/MatchUp/database"
-	route "github.com/KaranMali2001/MatchUp/internal/routes"
+	"github.com/KaranMali2001/MatchUp/internal/routes"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -20,5 +18,4 @@ func main() {
 	route.MatchRoute(e)
 	e.Start(":8080")
 
-	fmt.Println(database.Db)
 }
