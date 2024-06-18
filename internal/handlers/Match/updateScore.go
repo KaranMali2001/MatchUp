@@ -7,7 +7,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-func UpdateMatch(c echo.Context) error {
+func UpdateScore(c echo.Context) error {
 	id := c.Param("id")
 
 	var match models.Match
