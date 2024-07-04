@@ -1,5 +1,4 @@
-package tempdata
-/* package tempdata
+ package tempdata
 
 import (
 	"fmt"
@@ -12,13 +11,24 @@ func Registration(){
 	db:=database.Db
 	var players []models.Player
 	var Tournament models.Tournament
-
+     var registration []models.Registration
+	 if err:=db.Find(&registration).Error;err!=nil{
+		log.Println(err)
+		return
+	 }
+	 if(len(registration)>0){
+		fmt.Println("registration are already added in db")
+	return 
+	}
 	result:=db.Find(&players)
 	if result.Error!=nil{
 		log.Println(result.Error)
 		return
 	}
-	fmt.Println(players[0])
+	if(len(players)<=0){
+		fmt.Println("players dont exist")
+		return 
+	}
 	result =db.Where("organizer_name = ?","DemoUser").First(&Tournament)
 	if result.Error!=nil{
 		log.Println(result.Error)
@@ -37,4 +47,4 @@ func Registration(){
 	}
 	fmt.Println("registration for tournament is successful")
 	
-} */
+} 

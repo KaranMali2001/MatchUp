@@ -20,7 +20,7 @@ func main() {
 	route.Organizer_Route(e)
 	route.Tournament_route(e)
 	route.MatchRoute(e)
-	fmt.Println("dummy data is not loading")
+	fmt.Println("dummy data is  loading")
 	route.DummyData()
 
 	e.Start(":8080")

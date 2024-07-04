@@ -10,6 +10,6 @@ func DummyData() {
 tempdata.PlayerData()
 tempdata.OrganizerData()	
 tempdata.TournamentData()	
-//tempdata.Registration()
+tempdata.Registration()
 
 }
