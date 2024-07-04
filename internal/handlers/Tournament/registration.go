@@ -43,11 +43,11 @@ func Registration(c echo.Context) error {
 
 		}
 	}()
-   go func ()  {
-	err:=db.Where("username ?",reg.PlayerUsername).UpdateColumn("total_matches",reg.Player.TotalMatches+1)
-	if err != nil {
-		log.Println(err)
-	}
-   }()
+	go func() {
+		err := db.Where("username ?", reg.PlayerUsername).UpdateColumn("total_matches", reg.Player.TotalMatches+1)
+		if err != nil {
+			log.Println(err)
+		}
+	}()
 	return c.JSON(http.StatusOK, "registration for tournament is successful")
 }

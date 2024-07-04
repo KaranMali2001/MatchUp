@@ -1,9 +1,9 @@
 package middleware
 
 import (
+	"fmt"
 	"log"
 	"net/http"
-	"strings"
 
 	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/golang-jwt/jwt/v4"
@@ -12,16 +12,22 @@ import (
 
 func VerifyJWT(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		authHeader := c.Request().Header.Get("Authorization")
+		cookie, err := c.Cookie("jwt_Cookie")
+		if err != nil {
+			if err == http.ErrNoCookie {
+				log.Println(err)
+				return c.JSON(http.StatusBadRequest, "no cookie has been set")
+			}
+			log.Println(err)
+			return c.JSON(http.StatusBadRequest, "error while retriving cookie")
+
+		}
+		authHeader := cookie.Value
+		fmt.Println(authHeader)
 		if authHeader == "" {
 			return echo.NewHTTPError(http.StatusUnauthorized, "missing jwt")
 		}
 
-		if strings.HasPrefix(authHeader, "Bearer ") {
-			authHeader = strings.TrimPrefix(authHeader, "Bearer ")
-		} else {
-			return c.JSON(http.StatusUnauthorized, "does not contain bearer")
-		}
 		token, err := jwt.ParseWithClaims(authHeader, &models.JWTClaims{}, func(t *jwt.Token) (interface{}, error) {
 			return []byte(JWTKey), nil
 

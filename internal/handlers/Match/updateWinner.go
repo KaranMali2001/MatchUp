@@ -14,16 +14,16 @@ func UpdateWinner(c echo.Context) error {
 	id := c.Param("id")
 
 	var match models.Match
-	
+
 	db := database.Db
-	err:=helper.UpdateInfo(c,db,&match,id)
+	err := helper.UpdateInfo(c, db, &match, id)
 	if err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusInternalServerError,"error while updating")
+		return c.JSON(http.StatusInternalServerError, "error while updating")
 
 	}
-	go func ()  {
-		Rounds(db,id)
+	go func() {
+		Rounds(db, id)
 	}()
-return c.JSON(http.StatusOK,"match has been updated successfully")
+	return c.JSON(http.StatusOK, "match has been updated successfully")
 }

@@ -1,15 +1,18 @@
 package middleware
 
 import (
+	
 	"log"
+	
 
 	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/labstack/echo"
 )
 
 var JWTKey = []byte("my_secrete_key")
 
-func CreateToken(role string, username string) (string, error) {
+func CreateToken(c echo.Context, role string, username string) (string, error) {
 	claims := models.JWTClaims{
 		Role:             role,
 		Username:         username,
@@ -21,5 +24,7 @@ func CreateToken(role string, username string) (string, error) {
 		log.Println(err)
 		return "", err
 	}
-	return tokenString, nil
+	
+	
+	return tokenString,nil
 }

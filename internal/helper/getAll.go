@@ -32,6 +32,5 @@ func GetAllInfo[T any](c echo.Context, db *gorm.DB, models *[]T) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 
 	}
-	return c.JSON(http.StatusOK,models)
+	return c.JSON(http.StatusOK, models)
 }
-

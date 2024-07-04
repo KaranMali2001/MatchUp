@@ -27,7 +27,7 @@ func NewOrganizer(c echo.Context) error {
 		log.Println(err)
 		return c.JSON(http.StatusInternalServerError, "Error while creating tournament")
 	}
-	token, err := middleware.CreateToken("organizer", organizer.Username)
+	token, err := middleware.CreateToken(c, "organizer", organizer.Username)
 	if err != nil {
 		log.Println(err)
 		return c.JSON(http.StatusBadRequest, "entry created but error while creating jwt token")

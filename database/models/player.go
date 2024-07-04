@@ -7,7 +7,7 @@ import (
 type Player struct {
 	gorm.Model
 	FirstName    string `json:"first_name" gorm:"not null"`
-	LastName     string `json:"last_name" gorm:"not null"` 
+	LastName     string `json:"last_name" gorm:"not null"`
 	Username     string `json:"username" gorm:"unique;not null" validate:"required"`
 	Password     string `json:"password" validate:"required,min=8"`
 	Email        string `json:"email" validate:"required,email"`
