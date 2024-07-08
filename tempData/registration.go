@@ -3,7 +3,7 @@
 import (
 	"fmt"
 	"log"
-
+ "sync"
 	"github.com/KaranMali2001/MatchUp/database"
 	"github.com/KaranMali2001/MatchUp/database/models"
 )
@@ -43,6 +43,49 @@ func Registration(){
            log.Println(err)
 		   return
 	  }
+	 
+	  
+	 
+	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				log.Println("error while incrementing player")
+			}
+		}()
+		var mutex sync.Mutex
+		mutex.Lock()
+		defer mutex.Unlock()
+				Tournament.TotalPlayer += + 1
+		
+		if err := db.Save(&Tournament).Error; err != nil {
+			log.Println(err)
+			fmt.Println("error while updating total player")
+			return
+
+		}
+		
+		
+	}()
+	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				log.Println("recovered from panic:", r)
+			}
+		}()
+		var player models.Player
+		err := db.Where("username =?", reg.PlayerUsername).Find(&player).Error
+		if err != nil {
+			log.Println(err)
+		    fmt.Println("error while finding player with given username")			 
+			return
+		}
+         err=db.Model(&player).UpdateColumn("total_matches",player.TotalMatches+1).Error
+		 if err != nil {
+			log.Println(err)
+			fmt.Println("error while updating total matches in player")
+			return
+		 }
+		}()
 
 	}
 	fmt.Println("registration for tournament is successful")
