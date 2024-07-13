@@ -7,7 +7,6 @@ import (
 
 	"github.com/KaranMali2001/MatchUp/database"
 	"github.com/KaranMali2001/MatchUp/middleware"
-	"github.com/golang-jwt/jwt/v4"
 
 	"github.com/labstack/echo"
 )
@@ -35,15 +34,13 @@ func Login(c echo.Context) error {
 	}
 	fmt.Println(user.Username)
 	fmt.Println(user.Password)
-	claims := jwt.MapClaims{
-		"username": user.Username,
-		"role":     user.Role,
-	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(middleware.JWTKey)
+	err := middleware.CreateToken(c, user.Role, user.Username)
 	if err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusInternalServerError, "error while creating jwt")
+		return c.JSON(http.StatusInternalServerError, "cant log in at this time")
 	}
-	return c.JSON(http.StatusOK, tokenString)
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"success": true,
+		"message": "logged in successfully",
+	})
 }

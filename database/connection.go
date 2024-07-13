@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"sync"
 
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -20,7 +19,6 @@ func init() {
 	}
 
 	AutoMigrate()
-	
 
 	fmt.Println("database connected successfully")
 	var wg sync.WaitGroup

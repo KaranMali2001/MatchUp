@@ -12,7 +12,7 @@ import (
 
 func VerifyJWT(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		cookie, err := c.Cookie("jwt_Cookie")
+		cookie, err := c.Cookie("set-cookie")
 		if err != nil {
 			if err == http.ErrNoCookie {
 				log.Println(err)

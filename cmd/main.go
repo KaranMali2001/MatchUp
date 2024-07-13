@@ -21,6 +21,7 @@ func main() {
 	route.Tournament_route(e)
 	route.MatchRoute(e)
 	fmt.Println("dummy data is  loading")
+	fmt.Println("added cookie to code ")
 	route.DummyData()
 
 	e.Start(":8080")

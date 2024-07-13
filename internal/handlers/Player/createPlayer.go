@@ -1,14 +1,12 @@
 package player
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/KaranMali2001/MatchUp/database"
 	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/KaranMali2001/MatchUp/internal/helper"
-	"github.com/KaranMali2001/MatchUp/middleware"
 
 	"github.com/labstack/echo"
 )
@@ -32,10 +30,6 @@ func CreatePlayer(c echo.Context) error {
 		log.Println(err)
 		return c.JSON(http.StatusInternalServerError, "Error while creating player")
 	}
-	str, err := middleware.CreateToken(c, player.Role, player.Username)
-	if err != nil {
-		log.Println(err)
-	}
-	fmt.Println(str)
-	return c.JSON(http.StatusOK, "Your account as player has been created and cookie has been set")
+
+	return c.JSON(http.StatusOK, "Your account as player has been created please go to login page")
 }

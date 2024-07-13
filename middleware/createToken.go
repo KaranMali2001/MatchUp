@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	
 	"log"
-	
+	"net/http"
+	"time"
 
 	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/golang-jwt/jwt/v4"
@@ -12,7 +12,7 @@ import (
 
 var JWTKey = []byte("my_secrete_key")
 
-func CreateToken(c echo.Context, role string, username string) (string, error) {
+func CreateToken(c echo.Context, role string, username string) error {
 	claims := models.JWTClaims{
 		Role:             role,
 		Username:         username,
@@ -22,9 +22,14 @@ func CreateToken(c echo.Context, role string, username string) (string, error) {
 	tokenString, err := token.SignedString(JWTKey)
 	if err != nil {
 		log.Println(err)
-		return "", err
+		return err
 	}
-	
-	
-	return tokenString,nil
+	cookie := http.Cookie{
+		Name:    "set-cookie",
+		Value:   tokenString,
+		Expires: time.Now().Add(24 * time.Hour),
+	}
+	c.SetCookie(&cookie)
+
+	return nil
 }

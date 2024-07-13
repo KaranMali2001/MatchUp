@@ -1,14 +1,14 @@
 package tournament
 
 import (
-	"log"
-	"net/http"
-	"sync"
-"fmt"
+	"fmt"
 	"github.com/KaranMali2001/MatchUp/database"
 	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/KaranMali2001/MatchUp/internal/helper"
 	"github.com/labstack/echo"
+	"log"
+	"net/http"
+	"sync"
 )
 
 func Registration(c echo.Context) error {
@@ -46,25 +46,23 @@ func Registration(c echo.Context) error {
 			log.Println(err)
 
 		}
-		
-		
+
 	}()
 	go func() {
 		var player models.Player
 		err := db.Where("username =?", reg.PlayerUsername).Find(&player).Error
 		if err != nil {
 			log.Println(err)
-		    fmt.Println("error while finding player with given username")			 
+			fmt.Println("error while finding player with given username")
 			return
 		}
-         err=db.Model(&player).UpdateColumn("total_matches",player.TotalMatches+1).Error
-		 if err != nil {
+		err = db.Model(&player).UpdateColumn("total_matches", player.TotalMatches+1).Error
+		if err != nil {
 			log.Println(err)
 			fmt.Println("error while updating total matches in player")
 			return
-		 }
-		}()
+		}
+	}()
 
-	
 	return c.JSON(http.StatusOK, "registration for tournament is successful")
 }
