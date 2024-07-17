@@ -28,8 +28,10 @@ func CreateToken(c echo.Context, role string, username string) error {
 		Name:    "set-cookie",
 		Value:   tokenString,
 		Expires: time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
+	     Secure: false,
 	}
 	c.SetCookie(&cookie)
-
+	//c.Response().Header().Set("Access-Control-Allow-Credentials","true")
 	return nil
 }
