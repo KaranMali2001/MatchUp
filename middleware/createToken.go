@@ -25,13 +25,12 @@ func CreateToken(c echo.Context, role string, username string) error {
 		return err
 	}
 	cookie := http.Cookie{
-		Name:    "set-cookie",
-		Value:   tokenString,
-		Expires: time.Now().Add(24 * time.Hour),
+		Name:     "set-cookie",
+		Value:    tokenString,
+		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
-	     Secure: false,
+		Secure:   false,
 	}
 	c.SetCookie(&cookie)
-	//c.Response().Header().Set("Access-Control-Allow-Credentials","true")
 	return nil
 }

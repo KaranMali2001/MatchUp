@@ -12,7 +12,7 @@ var Db *gorm.DB
 
 func init() {
 	var err error
-	conn := "postgresql://postgres:password@postgres:5432/MatchUp"
+	conn := "postgresql://postgres:password@localhost:5432/MatchUp"
 	Db, err = gorm.Open(postgres.Open(conn), &gorm.Config{})
 	if err != nil {
 		panic(err)

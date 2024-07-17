@@ -32,7 +32,7 @@ func Login(c echo.Context) error {
 			return c.JSON(http.StatusUnauthorized, "user name password not found in db")
 		}
 	}
-	
+
 	err := middleware.CreateToken(c, user.Role, user.Username)
 	if err != nil {
 		log.Println(err)
