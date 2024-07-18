@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func DeleteInfo[T any](c echo.Context, db *gorm.DB, model *T, id string) error {
+func DeleteInfo[T any](c echo.Context, db *gorm.DB, model *T, id int) error {
 
 	resultChan := make(chan error)
 	go func() {

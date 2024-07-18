@@ -5,12 +5,11 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
-	"sync"
+	"strconv"
 
 	"github.com/KaranMali2001/MatchUp/database"
 	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/labstack/echo"
-	"gorm.io/gorm"
 )
 
 func CreateMatch(c echo.Context) error {
@@ -32,116 +31,67 @@ func CreateMatch(c echo.Context) error {
 		log.Println(err)
 		return c.JSON(http.StatusInternalServerError, "error while finding tournament")
 	}
-
+	fmt.Println("before tour live")
+	if !tournament.Live {
+		return c.JSON(http.StatusOK, "this tournament is not live")
+	}
 	if claims.Username != tournament.OrganizerName {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message":    "this tournament is not created by you",
 			"created by": tournament.OrganizerName,
 		})
 	}
-	var playerName []string
 
+	fmt.Println("before var players")
+	var players []string
 	for _, player := range reg {
-		playerName = append(playerName, player.PlayerUsername)
-
-		fmt.Println(player.PlayerUsername)
-	}
-	playerCount := len(playerName)
-	fmt.Println(playerCount)
-	rounds := (playerCount - 1) / 2
-	tx := db.Begin()
-	if playerCount%2 == 1 {
-
-		randIndex := rand.Intn(playerCount)
-		newMatch := &models.Match{
-			Round:                fmt.Sprintf("round of %d", rounds),
-			FirstPlayerUsername:  playerName[randIndex],
-			SecondPlayerUsername: "bye",
-			TournamentName:       tournament_name,
-			SET1:                 models.Score{FirstPlayerScore: 0, SecondPlayerScore: 0},
-			SET2:                 models.Score{FirstPlayerScore: 0, SecondPlayerScore: 0},
-			SET3:                 models.Score{FirstPlayerScore: 0, SecondPlayerScore: 0},
-			Winner:               playerName[randIndex],
-		}
-		errChan := make(chan error, 1)
-		var l1 sync.Mutex
-		go func() {
-
-			defer func() {
-				if err := recover(); err != nil {
-
-					l1.Lock()
-					errChan <- fmt.Errorf("recovered from error")
-					l1.Unlock()
-				}
-			}()
-			if err := tx.Create(&newMatch).Error; err != nil {
-
-				l1.Lock()
-				errChan <- err
-				l1.Unlock()
-
-			}
-
-		}()
-		err := <-errChan
-		if err != nil {
-			tx.Rollback() // Rollback if creation fails
-			log.Println(err)
-			return c.JSON(http.StatusInternalServerError, "error while creating matches")
-		}
-		playerName = append(playerName[:randIndex], playerName[randIndex+1:]...)
+		players = append(players, player.PlayerUsername)
 	}
 
-	fmt.Println("name of all player ....")
-	res, err := shuffleMatches(tx, playerName, tournament_name)
-	if err != nil {
-		tx.Rollback()
-		log.Println(err)
-
-	}
-	tx.Commit()
-	return c.JSON(http.StatusOK, res)
-}
-
-func shuffleMatches(tx *gorm.DB, playerName []string, tournamentName string) ([][]string, error) {
-
-	rand.Shuffle(len(playerName), func(i, j int) {
-		playerName[i], playerName[j] = playerName[j], playerName[i]
+	rand.Shuffle(len(players), func(i, j int) {
+		players[i], players[j] = players[j], players[i]
 	})
-	var pairs [][]string
-	for i := 0; i < len(playerName); i += 2 {
-		pair := []string{playerName[i], playerName[i+1]}
-		pairs = append(pairs, pair)
+
+	fmt.Println(len(players))
+
+	err = match(len(players), players)
+	if err != nil {
+		log.Println(err)
+		return c.JSON(http.StatusInternalServerError, "error while creating match")
 	}
-	fmt.Println("pairs", pairs)
-	rounds := (len(playerName) - 1) / 2
-	for _, pair := range pairs {
-		newMatch := &models.Match{
-			Round: fmt.Sprintf("round of %d", rounds),
 
-			FirstPlayerUsername:  pair[0],
-			SecondPlayerUsername: pair[1],
-			TournamentName:       tournamentName,
-			SET1:                 models.Score{FirstPlayerScore: 0, SecondPlayerScore: 0},
-			SET2:                 models.Score{FirstPlayerScore: 0, SecondPlayerScore: 0},
-			SET3:                 models.Score{FirstPlayerScore: 0, SecondPlayerScore: 0},
+	return c.JSON(http.StatusOK, "matches created successfully")
+}
+func match(round int, players []string) error {
+	if (len(players) % 2) != 0 {
+		match := &models.Match{
+			Round:                strconv.Itoa(round),
+			FirstPlayerUsername:  players[0],
+			SecondPlayerUsername: "",
 		}
-		var errChan chan error
-		var lock sync.Mutex
-		go func() {
-			if err := tx.Create(&newMatch).Error; err != nil {
 
-				lock.Lock()
-				errChan <- err
-				lock.Unlock()
-			}
-
-		}()
-		err := <-errChan
+		err := database.Db.Create(match).Error
 		if err != nil {
-			return nil, err
+			log.Println(err)
+			return err
 		}
+		fmt.Println("match for ", match.FirstPlayerUsername, match.SecondPlayerUsername, " created")
 	}
-	return pairs, nil
+	players = players[1:]
+	for i := 0; i < len(players); i += 2 {
+		match := &models.Match{
+			Round:                strconv.Itoa(round),
+			FirstPlayerUsername:  players[i],
+			SecondPlayerUsername: players[i+1],
+		}
+
+		err := database.Db.Create(match).Error
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		fmt.Println("match for ", match.FirstPlayerUsername, match.SecondPlayerUsername, " created")
+	}
+
+	return nil
 }

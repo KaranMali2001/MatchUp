@@ -14,20 +14,19 @@ import (
 func Registration(c echo.Context) error {
 	reg := new(models.Registration)
 	db := database.Db
-	
 
 	TournamentName := c.Param("tournament_name")
 	claims := c.Get("claims").(*models.JWTClaims)
 	if claims.Role != "player" {
 		return c.JSON(http.StatusUnauthorized, "you are not player")
 	}
-	if err := db.Where("live = ? AND tournament_name = ?",true,TournamentName).Error; err != nil {
+	if err := db.Where("live = ? AND tournament_name = ?", true, TournamentName).Error; err != nil {
 		log.Println(err)
 		return c.JSON(http.StatusBadRequest, "tournament is not live")
 	}
 	reg.TournamentName = TournamentName
 	reg.PlayerUsername = claims.Username
-	
+
 	errChannel := helper.Create(db, reg)
 	if err := <-errChannel; err != nil {
 		log.Println(err)
@@ -44,9 +43,9 @@ func Registration(c echo.Context) error {
 		mutex.Lock()
 		defer mutex.Unlock()
 		var tournament models.Tournament
-		if err:= db.Where("tournament_name = ?",TournamentName).Find(&tournament).Error;err!=nil{
+		if err := db.Where("tournament_name = ?", TournamentName).Find(&tournament).Error; err != nil {
 			log.Println(err)
-			return 
+			return
 		}
 		fmt.Println(tournament)
 		tournament.TotalPlayer += 1

@@ -1,11 +1,13 @@
 package tournament
 
 import (
+	"net/http"
+	"strconv"
+
 	"github.com/KaranMali2001/MatchUp/database"
 	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/KaranMali2001/MatchUp/internal/helper"
 	"github.com/labstack/echo"
-	"net/http"
 )
 
 func UpdateTournament(c echo.Context) error {
@@ -16,6 +18,8 @@ func UpdateTournament(c echo.Context) error {
 		return c.JSON(http.StatusUnauthorized, "only org can create tournament")
 	}
 	id := c.Param("id")
-	return helper.UpdateInfo(c, db, &tournament, id)
+
+	idint, _ := strconv.Atoi(id)
+	return helper.UpdateInfo(c, db, &tournament, idint)
 
 }

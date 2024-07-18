@@ -8,8 +8,8 @@ import (
 	"net/http"
 )
 
-func UpdateInfo[T any](c echo.Context, db *gorm.DB, model *T, id string) error {
-	err := db.First(model, "id = ?", id)
+func UpdateInfo[T any](c echo.Context, db *gorm.DB, model *T, id int) error {
+	err := db.First(model, "id = ?", id).Error
 	resultChan := make(chan error)
 	if err != nil {
 		log.Println(err)

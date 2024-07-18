@@ -31,7 +31,8 @@ func main() {
 	fmt.Println("dummy data is  loading")
 	fmt.Println("added cookie to code ")
 	route.DummyData()
-    e.GET("/DELETE-DATA",database.DeleteData)
+	e.GET("/DELETE-DATA", database.DeleteData)
 	e.Start(":8080")
+	//docker run -e POSTGRES_PASSWORD=password -e POSTGRES_DB=MatchUp -v MatchUpDB:/var/lib/postgresql/data -p 5432:5432 postgres
 
 }

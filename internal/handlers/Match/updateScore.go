@@ -1,6 +1,8 @@
 package match
 
 import (
+	"strconv"
+
 	"github.com/KaranMali2001/MatchUp/database"
 	"github.com/KaranMali2001/MatchUp/database/models"
 	"github.com/KaranMali2001/MatchUp/internal/helper"
@@ -12,6 +14,7 @@ func UpdateScore(c echo.Context) error {
 
 	var match models.Match
 	db := database.Db
-	return helper.UpdateInfo(c, db, &match, id)
+	idint, _ := strconv.Atoi(id)
+	return helper.UpdateInfo(c, db, &match, idint)
 
 }

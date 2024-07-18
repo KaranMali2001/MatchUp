@@ -13,5 +13,5 @@ func Tournament_route(e *echo.Echo) {
 	e.DELETE("/Tournament/:id", tournament.DeleteTournament, middleware.VerifyJWT)
 	e.GET("/Tournament/:id", tournament.GetTournament)
 	e.POST("/Tournament/registration/:tournament_name", tournament.Registration, middleware.VerifyJWT)
-	e.GET("/Tournament/registration/:tournament_name",tournament.GetRegistration)
+	e.GET("/Tournament/registration/:tournament_name", tournament.GetRegistration)
 }
