@@ -11,7 +11,9 @@ import (
 )
 
 func GetMatch(c echo.Context) error {
+	
 	idStr := c.Param("id")
+	
 	id, err := strconv.ParseUint(idStr, 10, 64)
 	if err != nil {
 		log.Println(err)

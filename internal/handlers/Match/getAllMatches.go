@@ -1,6 +1,7 @@
 package match
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -12,6 +13,8 @@ import (
 func GetAllMatches(c echo.Context) error {
 	tournamentName := c.Param("tournament_name")
 	var matches []models.Match
+	fmt.Println("tournament name inside GETALL MATCHES FUNCTION ",tournamentName)
+	
 	db := database.Db
 	err := db.Where("tournament_name = ? ", tournamentName).Find(&matches).Error
 	if err != nil {

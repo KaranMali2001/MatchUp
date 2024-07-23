@@ -14,11 +14,11 @@ import (
 
 func UpdateWinner(c echo.Context) error {
 	idstr := c.Param("id")
-	id, err := strconv.Atoi(idstr)
+	id, _:= strconv.Atoi(idstr)
 	var match models.Match
 
 	db := database.Db
-	err = helper.UpdateInfo(c, db, &match, id)
+	err := helper.UpdateInfo(c, db, &match, id)
 	if err != nil {
 		log.Println(err)
 		return c.JSON(http.StatusInternalServerError, "error while updating")

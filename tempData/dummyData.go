@@ -20,6 +20,7 @@ func PlayerData() {
 		return
 	}
 	Players := []models.Player{
+		
 		{FirstName: "Karan", LastName: "Sharma", Username: "karan", Password: "password123", Email: "karan@example.com", TotalMatches: 0, Win: 0, Loss: 0},
 		{FirstName: "Arushi", LastName: "Mehta", Username: "arushi", Password: "password123", Email: "arushi@example.com", TotalMatches: 0, Win: 0, Loss: 0},
 		{FirstName: "Sakshi", LastName: "Verma", Username: "sakshi", Password: "password123", Email: "sakshi@example.com", TotalMatches: 0, Win: 0, Loss: 0},

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/KaranMali2001/MatchUp/database/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -17,7 +18,7 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-
+Db.AutoMigrate(models.Match{})
 	AutoMigrate()
 
 	fmt.Println("database connected successfully")

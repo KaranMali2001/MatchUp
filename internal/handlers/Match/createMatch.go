@@ -54,7 +54,7 @@ func CreateMatch(c echo.Context) error {
 
 	fmt.Println(len(players))
 
-	err = match(len(players), players)
+	err = match(len(players), players,tournament_name)
 	if err != nil {
 		log.Println(err)
 		return c.JSON(http.StatusInternalServerError, "error while creating match")
@@ -62,12 +62,14 @@ func CreateMatch(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, "matches created successfully")
 }
-func match(round int, players []string) error {
+func match(round int, players []string,tournament_name string) error {
+
 	if (len(players) % 2) != 0 {
 		match := &models.Match{
 			Round:                strconv.Itoa(round),
 			FirstPlayerUsername:  players[0],
 			SecondPlayerUsername: "",
+			TournamentName: tournament_name,
 		}
 
 		err := database.Db.Create(match).Error
@@ -75,14 +77,17 @@ func match(round int, players []string) error {
 			log.Println(err)
 			return err
 		}
+		players=players[1:]
 		fmt.Println("match for ", match.FirstPlayerUsername, match.SecondPlayerUsername, " created")
 	}
-	players = players[1:]
+	
+	fmt.Println(players)
 	for i := 0; i < len(players); i += 2 {
 		match := &models.Match{
 			Round:                strconv.Itoa(round),
 			FirstPlayerUsername:  players[i],
 			SecondPlayerUsername: players[i+1],
+			TournamentName: tournament_name,
 		}
 
 		err := database.Db.Create(match).Error
@@ -90,7 +95,7 @@ func match(round int, players []string) error {
 			log.Println(err)
 			return err
 		}
-		fmt.Println("match for ", match.FirstPlayerUsername, match.SecondPlayerUsername, " created")
+		fmt.Println("match for ", match.FirstPlayerUsername, match.SecondPlayerUsername, " created",i)
 	}
 
 	return nil

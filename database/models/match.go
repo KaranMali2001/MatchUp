@@ -10,9 +10,8 @@ type Match struct {
 	FirstPlayerUsername string       `json:"first_player_username" gorm:"type:varchar(100);not null"`
 	PlayerOne           Registration `gorm:"foreignKey:FirstPlayerUsername;references:PlayerUsername;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
 
-	SecondPlayerUsername string       `json:"second_player_username" gorm:"type:varchar(100);not null"`
-	PlayerTwo            Registration `gorm:"foreignKey:SecondPlayerUsername;references:PlayerUsername;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
-
+	SecondPlayerUsername string       `json:"second_player_username" gorm:"type:varchar(100)"`
+	
 	TournamentName string     `json:"tournament_name" gorm:"type:varchar(100);not null"`
 	Tournament     Tournament `gorm:"foreignKey:TournamentName;references:TournamentName;constraint:onUpdate:CASCADE,onDelete:SET NULL"`
 	Winner         string     `json:"winner"`

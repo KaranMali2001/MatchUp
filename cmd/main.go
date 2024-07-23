@@ -33,6 +33,8 @@ func main() {
 	route.DummyData()
 	e.GET("/DELETE-DATA", database.DeleteData)
 	e.Start(":8080")
+	//fix match update issue
+	//only first set is updating
 	//docker run -e POSTGRES_PASSWORD=password -e POSTGRES_DB=MatchUp -v MatchUpDB:/var/lib/postgresql/data -p 5432:5432 postgres
 
 }
