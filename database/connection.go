@@ -20,7 +20,6 @@ func init() {
 	}
 Db.AutoMigrate(models.Match{})
 	AutoMigrate()
-
 	fmt.Println("database connected successfully")
 	var wg sync.WaitGroup
 	wg.Add(1)
