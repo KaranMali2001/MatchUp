@@ -63,7 +63,9 @@ func CreateMatch(c echo.Context) error {
 	return c.JSON(http.StatusOK, "matches created successfully")
 }
 func Match(round int, players []string,tournament_name string) error {
-
+    if len(players)==1{
+		return nil
+	}
 	if (len(players) % 2) != 0 {
 		fmt.Println("odd no of players")
 		match := &models.Match{
