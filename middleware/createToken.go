@@ -12,10 +12,11 @@ import (
 
 var JWTKey = []byte("my_secrete_key")
 
-func CreateToken(c echo.Context, role string, username string) error {
+func CreateToken(c echo.Context, role string, username string, id string) error {
 	claims := models.JWTClaims{
 		Role:             role,
 		Username:         username,
+		ID:               id,
 		RegisteredClaims: jwt.RegisteredClaims{},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -25,12 +26,14 @@ func CreateToken(c echo.Context, role string, username string) error {
 		return err
 	}
 	cookie := http.Cookie{
-		Name:     "set-cookie",
-		Value:    tokenString,
-		Expires:  time.Now().Add(24 * time.Hour),
-		HttpOnly: true,
-		Secure:   false,
+		Name:    "set-cookie",
+		Value:   tokenString,
+		Expires: time.Now().Add(24 * time.Hour),
+
+		Path: "/",
 	}
+
 	c.SetCookie(&cookie)
+
 	return nil
 }

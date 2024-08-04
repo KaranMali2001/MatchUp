@@ -14,8 +14,8 @@ func init() {
 	var err error
 	//conn := "postgresql://postgres:password@postgres:5432/MatchUp"
 
-	//	conn := "postgresql://postgres:password@localhost:5432/MatchUp"
-	conn:="postgresql://MatchUp_owner:KSNoaf0P9HqT@ep-mute-meadow-a1s2qyo6.ap-southeast-1.aws.neon.tech/MatchUp?sslmode=require"
+	//conn := "postgresql://postgres:password@localhost:5432/MatchUp"
+	conn := "postgresql://MatchUp_owner:KSNoaf0P9HqT@ep-mute-meadow-a1s2qyo6.ap-southeast-1.aws.neon.tech/MatchUp?sslmode=require"
 
 	//docker run -e POSTGRES_PASSWORD=password -e POSTGRES_DB=MatchUp -v MatchUpDB:/var/lib/postgresql/data -p 5432:5432 -d postgres
 
